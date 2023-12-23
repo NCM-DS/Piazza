@@ -1,0 +1,53 @@
+const mongoose = require('mongoose')
+const Postschema= mongoose.Schema({
+    user:{
+        type:String,
+        required:true
+    },
+    topic:{
+        //type:String,
+        tags: {type: Array}
+        required:true
+    },
+    tittle:{
+        type:String,
+        required:false 
+    },
+    text:{
+        type:String,
+        required:true
+    },
+   /* likes:{
+        votes:Number,
+        favs:Number
+    },
+    */
+
+    comment:{
+        body:String, 
+        data:DATE.now
+    
+    },
+   stat:{ 
+    //by default, Mongoose casts yes, 1 or true  to TRUE
+    type: Boolean,
+    default:false,
+    required:true
+},
+   
+   totallikes:{
+        type:Number,
+        required:false
+    },
+
+    location:{
+        type:String,
+        required:true
+    },
+    date:{
+        type:Date,
+        default:Date.now
+    }
+
+})
+module.exports = mongoose.model('posts',Postschema)

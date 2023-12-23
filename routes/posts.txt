@@ -1,0 +1,71 @@
+const express =require('express')
+const router = express.Router()
+
+const Post = require('../models/Postold')
+
+
+router.post('/',async(req,res)=>{ 
+    // Ill extract data from the body and insert it on my db
+   
+        //console.log(req.body)
+
+        const postData = new Post({
+            user:req.body.user,
+            topic:req.body.topic,
+            tittle:req.body.tittle,
+            text:req.body.text,
+            //likes:req.body.likes,
+            comment:req.body.comment,
+            status:req.body.status,
+            location:req.body.location,
+    
+        })
+        // try to insert...
+        try{
+            const postToSave = await postData.save()
+            res.send(postToSave)
+        }catch(err){
+            res.send({message:err})
+        }
+    })
+//GET 1(Read All)
+
+router.get('/', async(req,res)=>{
+    try{
+        const getPosts = await Post.find()
+        res.send(getPosts)
+    }catch(err){
+        res.send({message:err})
+    }
+})
+//GET 2(bypostID)
+/*
+router.get('/:postid', async(req,res)=>{
+    try{
+        const getPostbyID = await Post.findById(req.params.postid)
+        Post.findById(id,{ "likedByUsers": "$elemMatch": { "$eq": userId } })
+    
+        res.send(getPostbyID)
+    }catch(err){
+        res.send({message:err})
+    }
+})
+
+//Having create a postbyID its being insured that no one can vote twice for the sameID.
+//So The aim is to count how many users have like That specific post.
+
+/GET 2(bypostID)
+router.get('/:postid', async(req,res)=>{
+    try{
+        const getPostbyID = await Post.findById(req.params.postid)
+        Post.findById(id,{ "likedByUsers": "$elemMatch": { "$eq": userId } })
+    
+        res.send(getPostbyID)
+    }catch(err){
+        res.send({message:err})
+    }
+})
+*/
+
+
+module.exports = router
